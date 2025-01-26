@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Convert and Build PDF",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Convert Notebook",
+                "Build LaTeX"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "never"
+            }
+        },
+        {
+            "label": "Convert Notebook",
+            "type": "shell",
+            "command": "jupyter nbconvert \"${file}\" --to latex --output \"${fileDirname}/outputs.tex\" --template=\"${workspaceFolder}/latex_markdown_output\"",
+            "presentation": {
+                "reveal": "never"
+            }
+        },
+        {
+            "label": "Build LaTeX",
+            "type": "shell",
+            "command": "cd \"${fileDirname}\" && latexmk -pdf -interaction=nonstopmode -synctex=1 -file-line-error -shell-escape \"main.tex\"",
+            "problemMatcher": {
+                "owner": "latex",
+                "fileLocation": [
+                    "relative",
+                    "${fileDirname}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "message": 3
+                }
+            },
+            "presentation": {
+                "reveal": "never"
+            }
+        }
+    ]
+}
