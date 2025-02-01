@@ -14,3 +14,5 @@ wheels/
 *.fls
 *.log
 *.synctex.gz
+submission.zip
+outputs.tex
